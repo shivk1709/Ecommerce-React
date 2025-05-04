@@ -16,13 +16,13 @@ function ShopByCategory() {
     "bg-teal-50",
   ];
 
-  const { categories, loading, error } = useCategory();
+  // const { categories, loading, error } = useCategory();
 
-  const randomBg = bgColors[Math.floor(Math.random() * bgColors.length)];
+  // const randomBg = bgColors[Math.floor(Math.random() * bgColors.length)];
 
   return (
     <div>
-      <div className="section-container">
+      {/* <div className="section-container">
         <h1 className="section-heading">
           SHOP BY CATEGORY
         </h1>
@@ -45,7 +45,7 @@ function ShopByCategory() {
             )}
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }

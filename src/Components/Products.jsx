@@ -1,16 +1,14 @@
 import React, { useEffect, useRef, useState } from "react";
 import { FaChevronRight, FaChevronLeft } from "react-icons/fa";
-import { useCategory } from "../store/useCategory";
-import ProductItem from "./ProductItem";
 import { FaGreaterThan } from "react-icons/fa6";
-import useHorizontalScroll from "../store/useHorizontalScroll ";
+import ProductItem from "./ProductItem";
+import useHorizontalScroll from "../store/useHorizontalScroll";
+import { useBrands } from "../store/useBrands";
 
-function Products({passedCategories, componentName}) {
+function Products({ componentName }) {
   const [selectedCategory, setSelectedCategory] = useState(0);
-  const { categories : fetchedCategories, loading, error } = useCategory();
-
-  const categories = passedCategories || fetchedCategories;
-  const pageName = componentName || 'BESTSELLERS';
+  const { brands, loading, error } = useBrands();
+  
   const {
     isAtStart,
     isAtEnd,
@@ -20,35 +18,40 @@ function Products({passedCategories, componentName}) {
     scrollRightFunc,
   } = useHorizontalScroll(1000);
 
+  // Get all categories from all brands
+  const allCategories = brands.flatMap(brand => 
+    (brand.categories || []).map(category => ({
+      ...category,
+      name: category.name.replace(brand.name + ' ', '')
+    }))
+  );
+    const currentProducts = allCategories[selectedCategory]?.products || [];
+
   useEffect(() => {
     if (scrollRef.current) {
       handleScroll();
     }
-  }, [categories, selectedCategory]);
+  }, [selectedCategory]);
 
   if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error loading categories</p>;
+  if (error) return <p>Error loading data</p>;
+  if (allCategories.length === 0) return <p>No categories available</p>;
 
   return (
     <div>
       <div className="section-container">
-        <h1 className="section-heading">
-          {pageName}
-        </h1>
-
-        {/* Category Buttons */}
-        <div
-          className="flex flex-row-reverse space-x-reverse md:gap-14 gap-5 mt-3 overflow-x-auto whitespace-nowrap hide-scrollbar"
-          dir="rtl"
-        >
-          {categories.slice(0, 5).map((category, index) => (
+        <h1 className="section-heading">{componentName || "BESTSELLERS"}</h1>
+        
+        {/* Category Selection */}
+        <div className="flex gap-3 mt-3 overflow-x-auto hide-scrollbar">
+          {allCategories.slice(0, 5).map((category, index) => (
             <button
-              key={index}
+              key={`${category.id}-${index}`}
               onClick={() => setSelectedCategory(index)}
-              className={`inline-block font-semibold md:text-lg text-md ${
+              className={`whitespace-nowrap px-4 py-2 rounded-full transition-colors ${
                 selectedCategory === index
-                  ? "text-red-700 border-b-2 border-red-700"
-                  : "text-customBlack"
+                  ? "bg-red-100 text-red-700 font-bold"
+                  : "bg-gray-100 text-gray-700 hover:bg-gray-200"
               }`}
             >
               {category.name}
@@ -57,56 +60,52 @@ function Products({passedCategories, componentName}) {
         </div>
       </div>
 
+      {/* Products Display */}
       <div className="lg:mx-24 mx-8 md:relative">
-        {/* Right Scroll Button */}
+        {/* Scroll buttons */}
         {!isAtEnd && (
           <button
             onClick={scrollRightFunc}
-            disabled={isAtEnd}
-            className={`md:block hidden absolute top-[7vw] right-0 z-10 cursor-pointer px-4 py-12 bg-gray-100 border border-customBlack shadow-2xl text-customBlack transition-opacity ${
-              isAtEnd ? "opacity-30 cursor-not-allowed" : "hover:bg-gray-200"
-            }`}
+            className="md:block hidden absolute top-[50%] right-0 z-10 px-3 py-10 bg-white border border-gray-200 shadow-md hover:bg-gray-50"
           >
-            <FaChevronRight className="text-3xl" />
+            <FaChevronRight className="text-xl" />
           </button>
         )}
 
-        {/* Left Scroll Button */}
         {!isAtStart && (
           <button
             onClick={scrollLeftFunc}
-            disabled={isAtStart}
-            className={`md:block hidden absolute top-[8vw] left-3 z-10 cursor-pointer px-4 py-12 bg-gray-100 border border-customBlack shadow-2xl text-customBlack transition-opacity ${
-              isAtStart ? "opacity-30 cursor-not-allowed" : "hover:bg-gray-200"
-            }`}
+            className="md:block hidden absolute top-[50%] left-0 z-10 px-3 py-10 bg-white border border-gray-200 shadow-md hover:bg-gray-50"
           >
-            <FaChevronLeft className="text-3xl" />
+            <FaChevronLeft className="text-xl" />
           </button>
         )}
 
-        {/* Products Scrollable Container */}
+        {/* Products List */}
         <div
-          className="mt-4 overflow-x-auto scroll-smooth hide-scrollbar"
+          className="mt-6 overflow-x-auto hide-scrollbar scroll-smooth"
           ref={scrollRef}
           onScroll={handleScroll}
         >
-          <div className="flex md:space-x-4 w-max min-w-full ">
-            {categories[selectedCategory]?.products
-              .slice(0, 7)
-              .map((product) => (
-                <div className="min-w-[250px] " key={product.id}>
-                  <ProductItem product={product} />
-                </div>
-              ))}
+          <div className="flex gap-6 w-max min-w-full">
+            {currentProducts.slice(0, 7).map((product) => (
+              <div key={product.id} className="min-w-[250px]">
+                <ProductItem product={product} />
+              </div>
+            ))}
           </div>
         </div>
-        <div className="flex justify-center mt-3 ">
-          <button className="cursor-pointer md:text-lg text-customBlue font-bold inline-flex border-b-2 border-transparent hover:border-customBlue">
-            View All
-            <FaGreaterThan className="mt-1.5 ml-0.5" />
-            <FaGreaterThan className="mt-1.5" />
-          </button>
-        </div>
+
+        {/* View All Button */}
+        {currentProducts.length > 7 && (
+          <div className="flex justify-center mt-6">
+            <button className="flex items-center text-blue-600 font-semibold hover:underline">
+              View All
+              <FaGreaterThan className="ml-1 text-xs" />
+              <FaGreaterThan className="ml-0.5 text-xs" />
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

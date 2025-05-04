@@ -6,9 +6,19 @@ import { MdLocalOffer } from "react-icons/md";
 import { TfiHeadphoneAlt } from "react-icons/tfi";
 import { FaGreaterThan, FaMagnifyingGlass } from "react-icons/fa6";
 import { IoClose } from "react-icons/io5";
+import { Link } from "react-router-dom";
 
 function Sidemenu({ setHamburger }) {
   const [searchIcon, setSearchIcon] = useState(false);
+
+  const categories = [
+    { label: "Brands", path: "" },
+    { label: "Admin Dashboard ", path: "/admin" },
+    { label: "Sports Nutrition", path: "" },
+    { label: "Vitamins & Supplements", path: "" },
+    { label: "Health Foods & Drinks", path: "" },
+    { label: "Fitness Accessories & Equipments", path: "" },
+  ];
 
   return (
     <div className="fixed inset-0 z-50 bg-white transition-transform duration-300 ease-in-out transform translate-x-0">
@@ -94,20 +104,17 @@ function Sidemenu({ setHamburger }) {
           </div>
 
           {/* Menu Links */}
-          {[
-            "Brands",
-            "Sports Nutrition",
-            "Vitamins & Supplements",
-            "Health Foods & Drinks",
-            "Fitness Accessories & Equipments",
-          ].map((item, idx) => (
-            <div
-              key={idx}
-              className="mx-[2.2vw] py-[3.5vw] cursor-pointer font-bold flex items-center justify-between border-b border-gray-300 hover:bg-white hover:text-customBlue transition duration-200"
-            >
-              <h2>{item}</h2>
-              <FaGreaterThan />
-            </div>
+          {categories.map((item, idx) => (
+            <Link to={item.path} key={idx}>
+              <div
+                key={idx}
+                className="mx-[2.2vw] py-[3.5vw] cursor-pointer font-bold flex items-center justify-between border-b border-gray-300 hover:bg-white hover:text-customBlue transition duration-200"
+                onClick={() => setHamburger((prev) => !prev)}
+              >
+                <h2>{item.label}</h2>
+                <FaGreaterThan />
+              </div>
+            </Link>
           ))}
         </div>
       </div>

@@ -1,5 +1,5 @@
 import React from 'react'
-import useHorizontalScroll from '../store/useHorizontalScroll ';
+import useHorizontalScroll from '../store/useHorizontalScroll';
 import { FaChevronRight, FaChevronLeft } from "react-icons/fa";
 
 function ShopByBrands() {
@@ -21,8 +21,8 @@ function ShopByBrands() {
       'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiWzhO-EzegQoCSsk8l8e4jFsrFQbWbQuMV1Xl0xLrDzrKt14djkgfKrtAAgbeilgwLfBq7HVcEqhZliTIoIZ5Xuc4T49YashG9kc0YWL41Z0cQ7UD1rqITk6zR2Fn5bF7wKxE1XuowE2E5N8RYLIStu5MnXn7Pj1MlMMkYkmchzkA8u70Msku9iWM2RuA/s1600/big-muscle.png',
       'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiGXdmEvbOwcd3gaHtjSmfrKQULEA2cxDDgxspvJPn4EQMjoF8TGJ9XnDn_UHJPMdcw-bvPE3TkCTySxifhf68YSIsmHXw5fi7e2J3mnplKJ9vnsMLo_gZvWlYg-JMSK6qonOJoDbZ2ZXjzSTnSa5-wCSsR_Wdkf9EwMEBrqPTV3XuroqV-XLI_By0ZVFI/s320/avvatar.jpeg',
       'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjn4GgNmdYuUBBLFXE527COk0vN2hARLyQ_B0Z14jL43NlJXbwlMm167uaLd7lfN8IacGPWPUmW3aJqsGk4iOxncxMKG6ik-41E8oAq-XPFLemGKSbw2dVFu2J1nYyYvERMvZrgD4oubhWt6GMZj3GuhT921aT3SL7fWVTQeuDA7RAo_j_KXt_vtIwcjjA/s320/as-it-is.png',
-      'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgA3Q8v0rZgVaPlIJgEtd8wbC0BdtKbnkQfksLhE8saIv8CS__Zuz0Y3lLCm7UWPgU-YvyPa3rXcX5wOTHULoF0x6aQoNAevOOdeY4qIkHLg2IdD1CCp5HxetsrSgMql7HYENBFxtOr9STSHWVfi-HqYeV-hbCV_XvDh9aQCsEYhNodAmlVmaKRj9lacYg/s1600/dymnatize.png',
-      'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgA5XZNgGaDPJpaKd6jg52qgm_SJMbfeU8dqPgRQrYuXYDOQmUmyo8kmDFe8g3b4NnU2MopWTWIJ0NjRfWs9eqQ1TUJEnygYtySJKnKRrwqthHV4VSGpavwK2ytODrZB6cTXgv6rSdMC4qbvmwl3fC4hoykpQ_i6JAkjNFkvmyP_rh1hkqnqi3dcIG3QNY/s1600/Muscletech.png'
+      'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgA5XZNgGaDPJpaKd6jg52qgm_SJMbfeU8dqPgRQrYuXYDOQmUmyo8kmDFe8g3b4NnU2MopWTWIJ0NjRfWs9eqQ1TUJEnygYtySJKnKRrwqthHV4VSGpavwK2ytODrZB6cTXgv6rSdMC4qbvmwl3fC4hoykpQ_i6JAkjNFkvmyP_rh1hkqnqi3dcIG3QNY/s1600/Muscletech.png',
+      'https://github.com/shivk1709/Ecommerce-React/blob/master/public/Brands/dymnatize.png?raw=true'
     ]
     return (
         <div className='section-container md:relative py-8'>
